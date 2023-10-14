@@ -10,8 +10,8 @@ function App() {
     <div className="container">
       <h1>Hello React</h1>
       <Header />
-      <Menu />
-      <Footer />
+      <Menu /> {/* children: Pizza */}
+      <Footer /> {/* children: Order */}
     </div>
   );
 }
