@@ -1,22 +1,24 @@
+import { useState } from "react";
 import "./App.css";
 import messages from "./messages.js";
 
-function handlePrevious() {
-  alert("Previous");
-}
-
-function handleNext() {
-  alert("Next");
-}
-
 function App() {
-  const step = 1;
+  const [step, setStep] = useState(1);
+  function handlePrevious() {
+    console.log("Previous");
+    if (step > 1) setStep(step - 1);
+  }
+
+  function handleNext() {
+    console.log("Next");
+    if (step < 3) setStep(step + 1);
+  }
   return (
     <div className="steps">
       <div className="numbers">
-        <div className={`${step >= 1 ? "active" : ""}`}>1</div>
-        <div className={`${step >= 2 ? "active" : ""}`}>2</div>
-        <div className={`${step >= 3 ? "active" : ""}`}>3</div>
+        <div className={step >= 1 ? "active" : ""}>1</div>
+        <div className={step >= 2 ? "active" : ""}>2</div>
+        <div className={step >= 3 ? "active" : ""}>3</div>
       </div>
 
       <p className="message">
