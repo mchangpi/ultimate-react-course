@@ -8,16 +8,16 @@ function App() {
 
   function handlePrevious() {
     console.log("Previous");
-    if (step > 1) setStep(step - 1);
+    if (step > 1) setStep((prev) => prev - 1);
   }
 
   function handleNext() {
     console.log("Next");
-    if (step < 3) setStep(step + 1);
+    if (step < 3) setStep((prev) => prev + 1);
   }
   return (
     <>
-      <button className="close" onClick={() => setOpen(!isOpen)}>
+      <button className="close" onClick={() => setOpen((prev) => !prev)}>
         &times;
       </button>
       {isOpen && (
