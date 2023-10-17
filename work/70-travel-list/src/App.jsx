@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import items from "./items";
 
@@ -7,10 +6,26 @@ function Logo() {
 }
 
 function Form() {
+  const optionArr = Array.from({ length: 20 }, (element, idx) => idx + 1);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(event.target);
+  }
+
   return (
-    <div className="add-form">
+    <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your trip?</h3>
-    </div>
+      <select>
+        {optionArr.map((num) => (
+          <option value={num} key={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Item..." />
+      <button>Add</button>
+    </form>
   );
 }
 
@@ -19,7 +34,7 @@ function PackingList() {
     <div className="list">
       <ul>
         {items.map((item) => (
-          <Item item={item} />
+          <Item item={item} key={item.id} />
         ))}
       </ul>
     </div>
@@ -27,7 +42,6 @@ function PackingList() {
 }
 
 function Item({ item }) {
-  console.log(item);
   return (
     <>
       <li>
