@@ -38,8 +38,8 @@ function Counter() {
         {count === 0
           ? "Today is "
           : count > 0
-          ? `${count} days AFTER Today is`
-          : `${Math.abs(count)} days BEFORE Today is`}
+          ? `${count} days AFTER Today is `
+          : `${Math.abs(count)} days BEFORE Today is `}
         <span>{date.toDateString()}</span>
       </p>
     </div>
