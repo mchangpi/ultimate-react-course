@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import items from "./items";
 
 function Logo() {
   return <h1> Far Away </h1>;
@@ -14,7 +15,29 @@ function Form() {
 }
 
 function PackingList() {
-  return <div className="list">LIST</div>;
+  return (
+    <div className="list">
+      <ul>
+        {items.map((item) => (
+          <Item item={item} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Item({ item }) {
+  console.log(item);
+  return (
+    <>
+      <li>
+        <span style={item.packed ? { textDecoration: "line-through" } : {}}>
+          {item.quantity} {item.description}
+        </span>
+        <button>❌</button>
+      </li>
+    </>
+  );
 }
 
 function Stats() {
