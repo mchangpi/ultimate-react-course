@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import items from "./items";
 
@@ -6,24 +7,47 @@ function Logo() {
 }
 
 function Form() {
+  const [desc, setDesc] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
   const optionArr = Array.from({ length: 20 }, (element, idx) => idx + 1);
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event.target);
+
+    if (desc.length < 1) return;
+
+    const newItem = {
+      desc,
+      quantity,
+      packed: false,
+      id: Date.now(),
+    }; /* generate id the quick way */
+    console.log(newItem);
+
+    setDesc("");
+    setQuantity(1);
   }
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your trip?</h3>
-      <select>
+      <select
+        value={quantity}
+        onChange={(e) => setQuantity(Number(e.target.value))}
+      >
         {optionArr.map((num) => (
           <option value={num} key={num}>
             {num}
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Item..." />
+      <input
+        type="text"
+        placeholder="Item..."
+        value={desc}
+        onChange={(e) => setDesc(e.target.value)}
+      />
       <button>Add</button>
     </form>
   );
