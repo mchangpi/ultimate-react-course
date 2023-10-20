@@ -2,6 +2,39 @@ import { useState } from "react";
 import "./App.css";
 import initialItems from "./items";
 
+function App() {
+  const [items, setItems] = useState(initialItems);
+
+  function handleAddItem(item) {
+    setItems((prevItems) => [...prevItems, item]);
+  }
+
+  function handleDeleteItem(id) {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  }
+
+  function handleToggleItem(id) {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
+  }
+
+  return (
+    <div className="app">
+      <Logo />
+      <Form onAddItem={handleAddItem} />
+      <PackingList
+        items={items}
+        onDeleteItem={handleDeleteItem}
+        onToggleItem={handleToggleItem}
+      />
+      <Stats />
+    </div>
+  );
+}
+
 function Logo() {
   return <h1> Far Away </h1>;
 }
@@ -55,22 +88,32 @@ function Form({ onAddItem }) {
   );
 }
 
-function PackingList({ items, onDeleteItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => (
-          <Item item={item} key={item.id} onDeleteItem={onDeleteItem} />
+          <Item
+            item={item}
+            key={item.id}
+            onDeleteItem={onDeleteItem}
+            onToggleItem={onToggleItem}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ item, onDeleteItem }) {
+function Item({ item, onDeleteItem, onToggleItem }) {
   return (
     <>
       <li>
+        <input
+          type="checkbox"
+          checked={item.packed}
+          onChange={() => onToggleItem(item.id)}
+        />
         <span style={item.packed ? { textDecoration: "line-through" } : {}}>
           {item.quantity} {item.description}
         </span>
@@ -85,27 +128,6 @@ function Stats() {
     <footer className="stats">
       <em>💼 You have X items on your list, and you already packed X (X%)</em>
     </footer>
-  );
-}
-
-function App() {
-  const [items, setItems] = useState(initialItems);
-
-  function handleAddItem(item) {
-    setItems((prevItems) => [...prevItems, item]);
-  }
-
-  function handleDeleteItem(id) {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  }
-
-  return (
-    <div className="app">
-      <Logo />
-      <Form onAddItem={handleAddItem} />
-      <PackingList items={items} onDeleteItem={handleDeleteItem} />
-      <Stats />
-    </div>
   );
 }
 
