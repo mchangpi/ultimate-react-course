@@ -4,12 +4,16 @@ import "./App.css";
 import initialFriends from "./intialFriends";
 
 export default function App() {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+
   return (
     <div className="app">
       <div className="sidebar">
         <FriendsList />
-        <FormAddFriend />
-        <Button>Add friend</Button>
+        {showAddFriend && <FormAddFriend />}
+        <Button onClick={() => setShowAddFriend((prev) => !prev)}>
+          {showAddFriend ? "Close" : "Add friend"}
+        </Button>
       </div>
       <FormSplitBill />
     </div>
@@ -48,8 +52,12 @@ function Friend({ friend }) {
   );
 }
 
-function Button({ children }) {
-  return <button className="button">{children}</button>;
+function Button({ onClick, children }) {
+  return (
+    <button className="button" onClick={onClick}>
+      {children}
+    </button>
+  );
 }
 
 function FormAddFriend() {
