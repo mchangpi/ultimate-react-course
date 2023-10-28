@@ -9,14 +9,22 @@ const average = (arr) =>
 const KEY = "68fc7374";
 
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
 
   useEffect(function () {
-    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-      .then((res) => res.json()) // parse json to object
-      .then((data) => setMovies(data.Search));
-  }, []); /* runs on mount */
+    async function fetchMovies() {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+
+      console.log("stale stat: ", movies);
+      console.log(data.Search);
+    }
+    fetchMovies();
+  }, []); /* runs on mounting */
 
   return (
     <>
