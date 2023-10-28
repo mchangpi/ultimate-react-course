@@ -11,14 +11,17 @@ const KEY = "68fc7374";
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(function () {
     async function fetchMovies() {
+      setIsLoading(true);
       const res = await fetch(
         `http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`
       );
       const data = await res.json();
       setMovies(data.Search);
+      setIsLoading(false);
 
       console.log("stale stat: ", movies);
       console.log(data.Search);
@@ -33,9 +36,7 @@ export default function App() {
         <NumResults movies={movies}></NumResults>
       </NavBar>
       <Main>
-        <Box>
-          <MovieList movies={movies} />
-        </Box>
+        <Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box>
         {/* <WatchedBox></WatchedBox> */}
         <Box>
           <WatchedSummary watched={watched}></WatchedSummary>
@@ -44,6 +45,10 @@ export default function App() {
       </Main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="loader">Loading... </p>;
 }
 
 function NavBar({ children }) {
