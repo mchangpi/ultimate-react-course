@@ -45,7 +45,7 @@ export default function StarRating({
     setRating(rating);
     onSetRating(rating);
   }
-  console.log("tempRating", tempRating, "rating", rating);
+  // console.log("tempRating", tempRating, "rating", rating);
 
   return (
     <div style={containerStyle} className={className}>
