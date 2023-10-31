@@ -14,7 +14,7 @@ import { WatchedMovieList, WatchedSummary } from "./components/watchlist";
 const KEY = "68fc7374";
 
 export default function App() {
-  const [query, setQuery] = useState("inception");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,8 +44,10 @@ export default function App() {
           setError("");
           console.log(data ? data.Search : "");
         } catch (e) {
-          console.error("error", e);
-          if (e.name !== "AbortError") setError(e.message);
+          if (e.name !== "AbortError") {
+            console.log("error", e.message);
+            setError(e.message);
+          }
         } finally {
           setIsLoading(false);
         }
@@ -56,6 +58,8 @@ export default function App() {
         setError("");
         return;
       }
+
+      handleCloseMovie();
       fetchMovies();
 
       return () => controller.abort();

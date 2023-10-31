@@ -67,10 +67,29 @@ export function MovieDetails({
 
       return () => {
         document.title = "UsePopcorn";
-        console.log(`Clean up for movie ${movie.Title}`);
+        //console.log(`Clean up for movie ${movie.Title}`);
       };
     },
     [movie.Title]
+  );
+
+  useEffect(
+    function () {
+      const keydownCallback = (e) => {
+        if (e.code.toLowerCase() === "escape") {
+          onCloseMovie();
+          console.log("CLOSING");
+        }
+      };
+
+      document.addEventListener("keydown", keydownCallback);
+
+      return () => {
+        // remove event listener
+        document.removeEventListener("keydown", keydownCallback);
+      };
+    },
+    [onCloseMovie]
   );
 
   const isWatched = watched.map((m) => m.imdbID).includes(selectedId);
