@@ -21,6 +21,48 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
+  useEffect(
+    function () {
+      const controller = new AbortController();
+
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            { signal: controller.signal }
+          );
+
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+
+          const data = await res.json();
+          if (data.Response === "False") throw new Error("Movie not Found");
+
+          setMovies(data?.Search);
+          setError("");
+          console.log(data ? data.Search : "");
+        } catch (e) {
+          console.error("error", e);
+          if (e.name !== "AbortError") setError(e.message);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      if (query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+      fetchMovies();
+
+      return () => controller.abort();
+    },
+    [query]
+  );
+
   function handleSelectMovie(id) {
     setSelectedId((prev) => (prev === id ? null : id));
   }
@@ -42,43 +84,6 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((prevWatched) => prevWatched.filter((m) => m.imdbID !== id));
   }
-
-  useEffect(
-    function () {
-      async function fetchMovies() {
-        try {
-          setIsLoading(true);
-          setError("");
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-          );
-
-          if (!res.ok)
-            throw new Error("Something went wrong with fetching movies");
-
-          const data = await res.json();
-          if (data.Response === "False") throw new Error("Movie not Found");
-
-          setMovies(data.Search);
-          setError("");
-          console.log(data ? data.Search : "");
-        } catch (e) {
-          console.error("error", e);
-          setError(e.message);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-      fetchMovies();
-    },
-    [query]
-  );
 
   return (
     <>
