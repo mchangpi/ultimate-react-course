@@ -106,11 +106,13 @@ export default function App() {
         <NumResults movies={movies}></NumResults>
       </NavBar>
       <Main>
-        {isLoading && <Loader />}
-        {!isLoading && !error && (
-          <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
-        )}
-        {error && <ErrorMessage message={error} />}
+        <Box>
+          {isLoading && <Loader />}
+          {!isLoading && !error && (
+            <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+          )}
+          {error && <ErrorMessage message={error} />}
+        </Box>
 
         {/* <WatchedBox></WatchedBox> */}
         <Box>
