@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import "../App.css";
 
 export function NavBar({ children }) {
@@ -20,7 +20,34 @@ function Logo() {
 }
 
 export function Search({ query, setQuery }) {
-  // const [query, setQuery] = useState("");
+  const inputEL = useRef(null);
+
+  useEffect(
+    function () {
+      // console.log(inputEL.current);
+
+      const callback = (e) => {
+        if (document.activeElement === inputEL.current) {
+          console.log("active: ", document.activeElement);
+          return;
+        }
+
+        if (e.code.toLowerCase() === "enter") {
+          console.log(e.code.toLowerCase());
+          inputEL.current.focus();
+          setQuery("");
+        }
+      };
+
+      document.addEventListener("keydown", callback);
+
+      return () => {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [setQuery]
+  );
+
   return (
     <input
       className="search"
@@ -28,6 +55,7 @@ export function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEL}
     />
   );
 }
