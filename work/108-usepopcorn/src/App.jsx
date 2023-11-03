@@ -2,73 +2,22 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import { Loader, ErrorMessage, Main, Box } from "./components/utilities";
-
 import { NavBar, Search, NumResults } from "./components/navbar";
-
 import { MovieList, MovieDetails } from "./components/movielist";
-
 import { WatchedMovieList, WatchedSummary } from "./components/watchlist";
+import { useMovies } from "./hooks/useMovies";
 
 // import { tempMovieData, tempWatchedData } from "./movie-data";
 
-const KEY = "68fc7374";
-
 export default function App() {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [watched, setWatched] = useState(function () {
     const storedValue = localStorage.getItem("watched");
     return JSON.parse(storedValue);
   });
 
-  useEffect(
-    function () {
-      const controller = new AbortController();
-
-      async function fetchMovies() {
-        try {
-          setIsLoading(true);
-          setError("");
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-            { signal: controller.signal }
-          );
-
-          if (!res.ok)
-            throw new Error("Something went wrong with fetching movies");
-
-          const data = await res.json();
-          if (data.Response === "False") throw new Error("Movie not Found");
-
-          setMovies(data?.Search);
-          setError("");
-          console.log(data ? data.Search : "");
-        } catch (e) {
-          if (e.name !== "AbortError") {
-            console.log("error", e.message);
-            setError(e.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-
-      handleCloseMovie();
-      fetchMovies();
-
-      return () => controller.abort();
-    },
-    [query]
-  );
+  const { movies, isLoading, error } = useMovies(query /*, handleCloseMovie*/);
 
   useEffect(
     function () {
