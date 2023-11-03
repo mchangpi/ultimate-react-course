@@ -6,25 +6,16 @@ import { NavBar, Search, NumResults } from "./components/navbar";
 import { MovieList, MovieDetails } from "./components/movielist";
 import { WatchedMovieList, WatchedSummary } from "./components/watchlist";
 import { useMovies } from "./hooks/useMovies";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 // import { tempMovieData, tempWatchedData } from "./movie-data";
 
 export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useState(function () {
-    const storedValue = localStorage.getItem("watched");
-    return JSON.parse(storedValue);
-  });
 
   const { movies, isLoading, error } = useMovies(query /*, handleCloseMovie*/);
-
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watched));
-    },
-    [watched]
-  );
+  const [watched, setWatched] = useLocalStorage([], "watched");
 
   function handleSelectMovie(id) {
     setSelectedId((prev) => (prev === id ? null : id));

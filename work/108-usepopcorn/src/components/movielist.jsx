@@ -3,6 +3,8 @@ import { Loader } from "./utilities";
 import StarRating from "../StarRating";
 import "../App.css";
 
+import { useKey } from "../hooks/useKey";
+
 const KEY = "68fc7374";
 
 export function MovieList({ movies, onSelectMovie }) {
@@ -46,6 +48,8 @@ export function MovieDetails({
 
   const countRef = useRef(0);
 
+  useKey("escape", onCloseMovie);
+
   useEffect(
     function () {
       if (userRating) countRef.current++;
@@ -80,25 +84,6 @@ export function MovieDetails({
       };
     },
     [movie.Title]
-  );
-
-  useEffect(
-    function () {
-      const keydownCallback = (e) => {
-        if (e.code.toLowerCase() === "escape") {
-          onCloseMovie();
-          console.log("CLOSING");
-        }
-      };
-
-      document.addEventListener("keydown", keydownCallback);
-
-      return () => {
-        // remove event listener
-        document.removeEventListener("keydown", keydownCallback);
-      };
-    },
-    [onCloseMovie]
   );
 
   const isWatched = watched.map((m) => m.imdbID).includes(selectedId);

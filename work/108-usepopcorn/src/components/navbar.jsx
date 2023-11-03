@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import "../App.css";
+import { useKey } from "../hooks/useKey";
 
 export function NavBar({ children }) {
   return (
@@ -22,22 +23,19 @@ function Logo() {
 export function Search({ query, setQuery }) {
   const inputEL = useRef(null);
 
+  useKey("enter", () => {
+    if (document.activeElement === inputEL.current) {
+      return;
+    }
+    inputEL.current.focus();
+    setQuery("");
+  });
+
   useEffect(
     function () {
       // console.log(inputEL.current);
 
-      const callback = (e) => {
-        if (document.activeElement === inputEL.current) {
-          console.log("active: ", document.activeElement);
-          return;
-        }
-
-        if (e.code.toLowerCase() === "enter") {
-          console.log(e.code.toLowerCase());
-          inputEL.current.focus();
-          setQuery("");
-        }
-      };
+      const callback = (e) => {};
 
       document.addEventListener("keydown", callback);
 
