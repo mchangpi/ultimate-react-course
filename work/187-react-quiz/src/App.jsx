@@ -1,8 +1,11 @@
 import { useEffect, useReducer } from "react";
 import "./App.css";
 // import DateCounter from "./DateCounter";
-import Header from "./Header";
+import Header from "./components/Header";
 import Main from "./components/Main";
+import Loader from "./components/Loader";
+import Error from "./components/Error";
+import StartScreen from "./components/StartScreen";
 
 const initialState = {
   questions: [],
@@ -24,7 +27,7 @@ function reducer(state, action) {
 }
 
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
   useEffect(function () {
     async function fetchQuestions() {
       try {
@@ -33,7 +36,7 @@ export default function App() {
         dispatch({ type: "received", payload: data });
       } catch (err) {
         // console.error("Error", err);
-        dispatch({ type: "error" });
+        dispatch({ type: "failed" });
       }
     }
     fetchQuestions();
@@ -44,8 +47,9 @@ export default function App() {
       {/* <DateCounter></DateCounter> */}
       <Header />
       <Main>
-        <p>1/15</p>
-        <p>Question?</p>
+        {status === "loading" && <Loader />}
+        {status === "error" && <Error />}
+        {status === "ready" && <StartScreen numQuestions={questions.length} />}
       </Main>
     </div>
   );
