@@ -1,7 +1,7 @@
 import Options from "./Options";
 
 function Question({ curQuestion, dispatch, userAnswer }) {
-  console.log(curQuestion);
+  // console.log(curQuestion);
   return (
     <div>
       <h4>{curQuestion.question}</h4>
