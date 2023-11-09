@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import PageNav from "../components/PageNav";
+import AppNav from "../components/AppNav";
+
 function Homepage() {
   return (
     <>
       <PageNav />
-      <h3>Homepage</h3>
-      {/* <Link to="/pricing">Pricing</Link> */}
-      {/* Links only change component tree */}
+      <AppNav />
+      <h3>WorldWise</h3>
+      <NavLink to="/app">Go to the app</NavLink>
     </>
   );
 }
