@@ -1,21 +1,36 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
 import { useCities } from "../contexts/CitiesContext";
+import ChangeCenter from "./ChangeCenter";
+import DetectClick from "./DetectClick";
 
 import styles from "./Map.module.css";
 
 function Map() {
-  // const navigate = useNavigate();
   const [mapPosition, setMapPosition] = useState([40, 0]);
 
   const { cities } = useCities();
 
-  /*
-  const [searchParams, setSearchParams] = useSearchParams();
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
-  */
+  const [searchParams] = useSearchParams();
+  const mapLat = searchParams.get("lat");
+  const mapLng = searchParams.get("lng");
+
+  useEffect(
+    // Update LOCAL mapPosition based on GLOBAL searchParams
+    function () {
+      if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
+    },
+    [mapLat, mapLng]
+  );
+  // console.log(mapLat, mapLng);
 
   /* https://react-leaflet.js.org/ */
 
@@ -24,7 +39,7 @@ function Map() {
     <div className={styles.mapContainer}>
       <MapContainer
         center={mapPosition}
-        zoom={13}
+        zoom={6}
         scrollWheelZoom={true}
         className={styles.map}
       >
@@ -45,6 +60,8 @@ function Map() {
             </Marker>
           );
         })}
+        <ChangeCenter position={mapPosition} />
+        <DetectClick />
       </MapContainer>
     </div>
   );
