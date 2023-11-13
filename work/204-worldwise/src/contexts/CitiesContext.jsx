@@ -39,7 +39,7 @@ function CitiesProvider({ children }) {
 function useCities() {
   const context = useContext(CitiesContext);
   if (context === undefined) {
-    throw new Error("ERROR: Use Context Outside of Provider");
+    throw new Error("ERROR: Context was used OUTSIDE the Provider");
   }
   return context;
 }
