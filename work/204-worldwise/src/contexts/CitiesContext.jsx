@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-const BASE_URL = "http://localhost:8000";
-
+const BASE_URL = "http://localhost:8000"; // json-server allows POST operation
+o;
 const CitiesContext = createContext();
 
 function CitiesProvider({ children }) {
@@ -38,11 +38,30 @@ function CitiesProvider({ children }) {
     }
   }
 
+  async function createCity(newCity) {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCity),
+      });
+      const data = await res.json();
+      console.log("create city:", data);
+      setCities((cities) => [...cities, data]);
+    } catch (error) {
+      alert("There was an error loading data...");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const providerValue = {
     cities,
     isLoading,
     currentCity,
     getCityById,
+    createCity,
   };
 
   return (

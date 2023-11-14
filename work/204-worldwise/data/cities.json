@@ -47,6 +47,66 @@
         "lng": "-2.13128394200588"
       },
       "id": 98443198
+    },
+    {
+      "cityName": "Broto",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-11-14T14:44:50.026Z",
+      "notes": "test city",
+      "position": {
+        "lat": "42.58867974298179",
+        "lng": "-0.10986328125000001"
+      },
+      "id": 98443199
+    },
+    {
+      "cityName": "Broto",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-11-14T14:47:55.026Z",
+      "notes": "test note",
+      "position": {
+        "lat": "42.58867974298179",
+        "lng": "-0.10986328125000001"
+      },
+      "id": 98443200
+    },
+    {
+      "cityName": "Rieupeyroux",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2023-11-14T14:49:26.241Z",
+      "notes": "test",
+      "position": {
+        "lat": "44.28296372781015",
+        "lng": "2.2412109375000004"
+      },
+      "id": 98443201
+    },
+    {
+      "cityName": "Albalate del Arzobispo",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-11-14T14:57:18.845Z",
+      "notes": "",
+      "position": {
+        "lat": "41.115779647441514",
+        "lng": "-0.6152343750000001"
+      },
+      "id": 98443202
+    },
+    {
+      "cityName": "Vinuesa",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-11-14T15:03:14.036Z",
+      "notes": "test",
+      "position": {
+        "lat": "42.019916682635206",
+        "lng": "-2.7685546875000004"
+      },
+      "id": 98443203
     }
   ]
 }
