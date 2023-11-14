@@ -9,6 +9,7 @@ import Button from "./Button";
 
 import styles from "./Map.module.css";
 import { useGeolocation } from "../hooks/useGeolocation";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
   const { cities } = useCities();
@@ -16,15 +17,13 @@ function Map() {
   /* LOCAL state: SYNC LOCAL state with GLOBAL/REMOTE state */
   const [mapPosition, setMapPosition] = useState([40, 0]);
 
-  const [searchParams] = useSearchParams();
   const {
     isLoading: isLoadingPosition,
     position: geoLocation,
     getPosition,
   } = useGeolocation();
 
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
+  const [mapLat, mapLng] = useUrlPosition();
 
   useEffect(
     // SYNC LOCAL mapPosition with GLOBAL searchParams
@@ -80,6 +79,8 @@ function Map() {
           );
         })}
         <ChangeCenter position={mapPosition} />
+
+        {/* Submit form in <DetectClick/> */}
         <DetectClick />
       </MapContainer>
     </div>
