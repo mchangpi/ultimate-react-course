@@ -12,11 +12,11 @@ import Form from "./components/Form";
 
 import { CitiesProvider } from "./contexts/CitiesContext";
 import { AuthProvider } from "./contexts/FakeAuthContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
     <>
-      <h3>Hello React Router</h3>
       <CitiesProvider>
         <AuthProvider>
           <BrowserRouter>
@@ -25,7 +25,14 @@ function App() {
               <Route path="product" element={<Product />}></Route>
               <Route path="pricing" element={<Pricing />}></Route>
               <Route path="login" element={<Login />}></Route>
-              <Route path="app" element={<AppLayout />}>
+              <Route
+                path="app"
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
                 {
                   <Route
                     index
