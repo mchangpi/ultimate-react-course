@@ -31,11 +31,14 @@ function AuthProvider({ children }) {
   function login(email, password) {
     if (email === FAKE_USER.email && password === FAKE_USER.password) {
       dispatch({ type: "login", payload: FAKE_USER });
+    } else {
+      console.log("Wrong email or password");
     }
   }
 
   function logout() {
     dispatch({ type: "logout" });
+    // console.log(user.name, "logged out");
   }
 
   const providerValue = {
