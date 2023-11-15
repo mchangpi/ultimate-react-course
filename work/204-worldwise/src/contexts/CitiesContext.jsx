@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const BASE_URL = "http://localhost:8000"; // json-server allows POST operation
-o;
+
 const CitiesContext = createContext();
 
 function CitiesProvider({ children }) {
@@ -50,7 +50,21 @@ function CitiesProvider({ children }) {
       console.log("create city:", data);
       setCities((cities) => [...cities, data]);
     } catch (error) {
-      alert("There was an error loading data...");
+      alert("There was an error creating data...");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function deleteCityById(id) {
+    try {
+      setIsLoading(true);
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+      setCities((cities) => cities.filter((c) => c.id !== id));
+    } catch (error) {
+      alert("There was an error deleting city...");
     } finally {
       setIsLoading(false);
     }
@@ -62,6 +76,7 @@ function CitiesProvider({ children }) {
     currentCity,
     getCityById,
     createCity,
+    deleteCityById,
   };
 
   return (
