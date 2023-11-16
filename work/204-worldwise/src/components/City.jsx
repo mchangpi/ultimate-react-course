@@ -18,11 +18,13 @@ function City() {
   const { id } = useParams(); /* get param from <Route/> */
   const { isLoading, currentCity, getCityById } = useCities();
 
+  // getCityById() would be called and Re-created, which caused infinite loop
+  // To fix infinite loop => wrap getCityById() in useCallback()
   useEffect(
     function () {
       getCityById(id);
     },
-    [id]
+    [id, getCityById]
   );
 
   const { cityName, emoji, date, notes } = currentCity;
