@@ -1,4 +1,4 @@
-import { memo, useMemo, useEffect, useState } from "react";
+import { memo, useMemo, useCallback, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -25,10 +25,6 @@ function App() {
         )
       : posts;
 
-  function handleAddPost(post) {
-    setPosts((posts) => [post, ...posts]);
-  }
-
   function handleClearPosts() {
     setPosts([]);
   }
@@ -49,6 +45,11 @@ function App() {
     };
   }, [posts.length]);
 
+  // Use useCallback(function) with memo(props)
+  const handleAddPost = useCallback(function origHandleAddPost(post) {
+    setPosts((posts) => [post, ...posts]);
+  }, []);
+
   return (
     <section>
       <button
@@ -65,7 +66,12 @@ function App() {
         setSearchQuery={setSearchQuery}
       />
       <Main posts={searchedPosts} onAddPost={handleAddPost} />
-      <Archive options={archiveOptions} />
+      <Archive
+        options={archiveOptions}
+        onAddPost={handleAddPost}
+        setIsFakeDark={setIsFakeDark}
+      />
+      {/* a setter(setIsFakeDark) has a unique identity, would be REMEMBERED automatically */}
       <Footer />
     </section>
   );
@@ -162,12 +168,16 @@ function List({ posts }) {
   );
 }
 
-const Archive = memo(function origArchieve({ options }) {
+const Archive = memo(function origArchieve({
+  options,
+  onAddPost,
+  setIsFakeDark,
+}) {
   const { show, title } = options;
   // Here we don't need the setter function. We're only using state to store these posts because the callback function passed into useState (which generates the posts) is only called once, on the initial render. So we use this trick as an optimization technique, because if we just used a regular variable, these posts would be re-created on every render. We could also move the posts outside the components, but I wanted to show you this trick 😉
   const [posts] = useState(() =>
     // 💥 WARNING: This might make your computer slow! Try a smaller `length` first
-    Array.from({ length: 50000 }, () => createRandomPost())
+    Array.from({ length: 20000 }, () => createRandomPost())
   );
 
   const [showArchive, setShowArchive] = useState(show);
@@ -186,7 +196,7 @@ const Archive = memo(function origArchieve({ options }) {
               <p>
                 <strong>{post.title}:</strong> {post.body}
               </p>
-              {/* <button onClick={() => onAddPost(post)}>Add as new post</button> */}
+              <button onClick={() => onAddPost(post)}>Add as new post</button>
             </li>
           ))}
         </ul>
