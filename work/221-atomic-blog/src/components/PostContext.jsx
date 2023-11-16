@@ -3,6 +3,7 @@ import createRandomPost from "../utilities/createRandomPost";
 
 const PostContext = createContext();
 
+/* children PROP NOT Re-render !! */
 function PostProvider({ children }) {
   const [posts, setPosts] = useState(() =>
     Array.from({ length: 30 }, () => createRandomPost())
