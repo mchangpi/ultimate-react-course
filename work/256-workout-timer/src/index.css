@@ -29,6 +29,7 @@ main {
     0px 41.8px 41.8px rgba(0, 0, 0, 0.072), 0px 100px 100px rgba(0, 0, 0, 0.1);
 }
 
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip */
 h1 {
   font-size: 6rem;
   text-transform: uppercase;
@@ -39,8 +40,10 @@ h1 {
   line-height: 1;
   margin-bottom: 2rem;
   background-clip: text;
+  -webkit-background-clip: text;
   background-image: linear-gradient(to right bottom, #80dfe1, #4e7afa);
   /* color: transparent; */
+  color: rgba(0, 0, 0, 0.1);
   transform: skew(-20deg);
 }
 
@@ -106,8 +109,10 @@ p {
   font-weight: 900;
   text-align: center;
   background-clip: text;
+  -webkit-background-clip: text;
   background-image: linear-gradient(to right bottom, #80dfe1, #4e7afa);
   /* color: transparent; */
+  color: rgba(0, 0, 0, 0.1);
 }
 
 button {
