@@ -4,9 +4,10 @@
 export default {
   content: ['./**/*.html', './src/**/*.{js,ts,jsx,tsx,css}'],
   theme: {
+    /* override default fonts */
     fontFamily: {
-      /* override default fonts */
       sans: 'Roboto Mono, monospace',
+      serif: ['Merriweather', 'serif'],
     },
     extend: {
       // colors: { pizza: '#123456' },
