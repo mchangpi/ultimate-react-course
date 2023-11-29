@@ -8,7 +8,7 @@ function Menu() {
   { path: "/menu", element: <Menu />, loader: menuLoader }, 
   */
   const menu = useLoaderData();
-  console.log(menu);
+  // console.log(menu);
 
   return (
     <ul className="divide-y-8 divide-stone-200 px-4">
