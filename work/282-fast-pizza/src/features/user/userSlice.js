@@ -19,6 +19,9 @@ export const { updateName } = userSlice.actions;
 
 export default userSlice.reducer;
 
+/* selector functions */
+export const getUserName = (state) => state.user.username;
+
 /*
 function getPosition() {
   return new Promise(function (resolve, reject) {
