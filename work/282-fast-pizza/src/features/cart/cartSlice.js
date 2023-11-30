@@ -21,7 +21,7 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action) {
       //    state.cart.push(action.payload); // mutate the cart
-      state.cart = [...state.cart, action.payload]; // ReactJs wa滴製巧克力 100%限定y
+      state.cart = [...state.cart, action.payload]; // ReactJs way
     },
     deleteItem(state, action) {
       state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
@@ -76,3 +76,10 @@ export const getTotalCartQuantity = (state) =>
 
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((accu, cur) => accu + cur.totalPrice, 0);
+
+export const getCurQuantityById = (id) => (state) => {
+  /* returns the first element in the array that satisfies the testing function */
+  const selectedItem = state.cart.cart.find((item) => item.pizzaId === id);
+  if (selectedItem) return selectedItem.quantity;
+  else return 0;
+};
