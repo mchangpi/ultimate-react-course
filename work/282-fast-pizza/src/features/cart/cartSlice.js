@@ -19,7 +19,7 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action) {
       //    state.cart.push(action.payload); // mutate the cart
-      state.cart = [...state.cart, action.payload]; // ReactJs way
+      state.cart = [...state.cart, action.payload]; // ReactJs wa滴製巧克力 100%限定y
     },
     deleteItem(state, action) {
       state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
