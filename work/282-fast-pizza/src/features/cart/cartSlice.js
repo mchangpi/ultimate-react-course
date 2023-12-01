@@ -32,7 +32,7 @@ const cartSlice = createSlice({
           return {
             ...item,
             quantity: item.quantity + 1,
-            totalPrice: item.totalPrice + item.unitPrice,
+            totalPrice: item.quantity * item.unitPrice,
           };
         } else {
           return item;
@@ -40,17 +40,20 @@ const cartSlice = createSlice({
       });
     },
     decItemQuantity(state, action) {
-      state.cart = state.cart.map((item) => {
-        if (item.pizzaId === action.payload) {
-          return {
-            ...item,
-            quantity: item.quantity - 1,
-            totalPrice: item.totalPrice - item.unitPrice,
-          };
-        } else {
-          return item;
-        }
-      });
+      /* if (item.quantity < 1) cartSlice.caseReducers.deleteItem(state, action); */
+      state.cart = state.cart
+        .map((item) => {
+          if (item.pizzaId === action.payload) {
+            return {
+              ...item,
+              quantity: item.quantity - 1,
+              totalPrice: item.quantity * item.unitPrice,
+            };
+          } else {
+            return item;
+          }
+        })
+        .filter((item) => item.quantity > 0);
     },
     clearCart(state) {
       state.cart = [];
