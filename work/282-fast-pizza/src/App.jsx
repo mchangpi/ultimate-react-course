@@ -7,6 +7,7 @@ import CreateOrder, {
   action as createOrderAction,
 } from './features/order/CreateOrder';
 import Order, { loader as orderLoader } from './features/order/Order';
+import { action as updateOrderAction } from './features/order/UpdateOrder';
 import AppLayout from './ui/AppLayout';
 import Error from './ui/Error';
 /* https://reactrouter.com/en/main/routers/create-browser-router */
@@ -34,7 +35,8 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
-      } /* GET */,
+        action: updateOrderAction,
+      } /* GET, PATCH */,
     ],
   },
 ]);
