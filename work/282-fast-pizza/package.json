@@ -1,6 +1,7 @@
 {
   "name": "282-fast-pizza",
   "private": true,
+  "homepage": "https://mchangpi.github.io/ultimate-react-course",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -9,7 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "tail": "npx tailwindcss -i ./src/index.css -o ./src/css/output.css",
-    "tailw": "npx tailwindcss -i ./src/index.css -o ./src/css/output.css --watch"
+    "tailw": "npx tailwindcss -i ./src/index.css -o ./src/css/output.css --watch",
+    "deploy": "gh-pages -d ./dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
