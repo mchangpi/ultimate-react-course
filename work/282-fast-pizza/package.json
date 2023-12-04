@@ -1,7 +1,6 @@
 {
   "name": "282-fast-pizza",
   "private": true,
-  "homepage": "https://mchangpi.github.io/ultimate-react-course",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
