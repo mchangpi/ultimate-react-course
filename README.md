@@ -3,9 +3,11 @@
 請參考我的履歷:  
 https://www.cakeresume.com/mchangpi
 
-1\. 此專案為Udemy網路課程[The Ultimate React Course 2024: React, Redux & More](https://www.udemy.com/course/the-ultimate-react-course/)中的一個專案練習
+1\. 此專案為 Udemy 網路課程  
+<a href="https://www.udemy.com/course/the-ultimate-react-course/" target="_blank">The Ultimate React Course 2024: React, Redux & More</a>  
+中的一個專案練習
 
-2\. 於此專案，我實作了Pizza點餐系統網站前端功能，並使用了相關技術:
+2\. 於此專案，我實作了 Pizza 點餐系統網站前端功能，並使用了相關技術:
 
 - React: 管理元件的狀態及副作用(side effects)
 - React Router: 實作前端分頁功能
