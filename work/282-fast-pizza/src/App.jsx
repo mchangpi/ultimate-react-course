@@ -10,12 +10,11 @@ import Order, { loader as orderLoader } from './features/order/Order';
 import { action as updateOrderAction } from './features/order/UpdateOrder';
 import AppLayout from './ui/AppLayout';
 import Error from './ui/Error';
-/* https://reactrouter.com/en/main/routers/create-browser-router */
 
-// const BASE = process ? process.env.REACT_APP_BASE : '/ultimate-react-course';
-const BASE = '/ultimate-react-course';
+const BASE = `${import.meta.env.VITE_BASE}` || '/';
 console.log('BASE', BASE);
 
+/* https://reactrouter.com/en/main/routers/create-browser-router */
 const router = createBrowserRouter(
   [
     {
